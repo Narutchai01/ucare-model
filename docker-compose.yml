@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  server:
+    image: narutchai001/ucare-be:latest
+    restart: on-failure
+    container_name: project-s-server1
+    environment:
+      - PORT=${PORT}
+      - DB_HOST=project-s-db1
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=ucare
+      - DB_PORT=5432
+      - SUPA_API_KEY=${SUPA_API_KEY}
+      - SUPA_API_URL=${SUPA_API_URL}
+      - SUPA_BUCKET_NAME=${SUPA_BUCKET_NAME}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - API_MODEL=http://project-s-model1:8000
+      - SENDING_EMAIL=${SENDING_EMAIL}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+    ports:
+      - "${PORT}:${PORT}"
+
+  postgres:
+    image: pgvector/pgvector:pg15
+    restart: on-failure
+    container_name: project-s-db1
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ucare
+    volumes:
+      - ./databasepg:/var/lib/postgresql/data
+
+  model:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: project-s-model1
+    environment:
+      - DB_HOST=194.164.150.224
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=ucare
+      - DB_PORT=5432alue
+    ports:
+      - "5000:8000"
