@@ -28,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{secrets.DOCKERHUB_USERNAME}}/ucare-model-v2
+          images: ${{secrets.DOCKERHUB_USERNAME}}/ucare-model-v3
           tags: |
             type=ref,event=branch
             type=sha,format=short
@@ -45,5 +45,5 @@ jobs:
             BUILD_VERSION=${{ github.ref_name }}
             BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
             COMMIT_SHA=${{ github.sha }}
-          cache-from: type=registry,ref=${{secrets.DOCKERHUB_USERNAME}}/ucare-model-v2:buildcache
-          cache-to: type=registry,ref=${{secrets.DOCKERHUB_USERNAME}}/ucare-model-v2:buildcache,mode=ma
+          cache-from: type=registry,ref=${{secrets.DOCKERHUB_USERNAME}}/ucare-model-v3:buildcache
+          cache-to: type=registry,ref=${{secrets.DOCKERHUB_USERNAME}}/ucare-model-v3:buildcache,mode=ma
