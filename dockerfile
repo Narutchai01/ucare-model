@@ -5,8 +5,10 @@ FROM python:3.11-slim
 ENV DB_HOST=localhost 
 ENV DB_NAME=ucare
 ENV DB_USER=admin123
-ENV DB_PASSWORD=admin123 
+ENV DB_PASS=admin123 
 ENV DB_PORT=5432
+ENV API_KEY=your_api_key_here
+ENV PROVIDER=your_provider_here
 
 # Set the working directory
 WORKDIR /app

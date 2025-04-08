@@ -34,7 +34,7 @@ def classify_skin_type(image_url: str, cur):
     except Exception as e:
         print(f"Model inference error: {e}")
         resultName = "normal"  # Default if model throws an error
-        return f"{resultName} skin", 0  # Return early on error
+        return f"{resultName} skin", 19  # Return early on error
 
     # Query the database to get the corresponding ID for the resultName
 

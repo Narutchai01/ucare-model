@@ -7,7 +7,7 @@ services:
     container_name: project-s-server1
     environment:
       - PORT=${PORT}
-      - DB_HOST=project-s-db1
+      - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_NAME=ucare
@@ -16,7 +16,7 @@ services:
       - SUPA_API_URL=${SUPA_API_URL}
       - SUPA_BUCKET_NAME=${SUPA_BUCKET_NAME}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      - API_MODEL=http://project-s-model1:8000
+      - API_MODEL=http://project-s-model2:8000
       - SENDING_EMAIL=${SENDING_EMAIL}
       - EMAIL_PASSWORD=${EMAIL_PASSWORD}
     ports:
@@ -35,16 +35,32 @@ services:
     volumes:
       - ./databasepg:/var/lib/postgresql/data
 
-  model:
-    build:
-      context: .
-      dockerfile: dockerfile
-    container_name: project-s-model1
+  # model:
+  #   build:
+  #     context: .
+  #     dockerfile: dockerfile
+  #   container_name: project-s-model1
+  #   environment:
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASS=${DB_PASS}
+  #     - DB_NAME=ucare
+  #     - DB_PORT=5432
+  #     - API_KEY=${API_KEY}
+  #     - PROVIDER=${PROVIDER}
+  #   ports:
+  #     - "5000:8000"
+
+  model2:
+    image: narutchai001/ucare-model-v2:v1
+    container_name: project-s-model2
     environment:
-      - DB_HOST=194.164.150.224
+      - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS}
       - DB_NAME=ucare
-      - DB_PORT=5432alue
+      - DB_PORT=5432
+      - API_KEY=${API_KEY}
+      - PROVIDER=${PROVIDER}
     ports:
-      - "5000:8000"
+      - "5001:8000"
